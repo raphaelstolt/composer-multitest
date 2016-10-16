@@ -1,0 +1,43 @@
+{
+    "name": "stolt/composer-multitest",
+    "description": "Composer script to run a Composer test or spec script against all versions managed by PHPBrew or phpenv.",
+    "keywords": ["composer script", "phpbrew", "phpenv", "multitest", "local ci"],
+    "homepage": "https://github.com/raphaelstolt/composer-phpbrew-multitest",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Raphael Stolt",
+            "email": "raphael.stolt@gmail.com"
+        }
+    ],
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.6",
+        "symfony/process": "^3.1",
+        "symfony/yaml": "^3.1"
+    },
+    "require-dev": {
+        "composer/composer": "^1.0",
+        "friendsofphp/php-cs-fixer": "2.0.0-alpha",
+        "mockery/mockery": "^0.9.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Stolt\\Composer\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Stolt\\Composer\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "cm:test": "phpunit",
+        "cm:test-with-coverage": "phpunit --coverage-html coverage-reports",
+        "cm:cs-fix": "php-cs-fixer fix . -vv || true",
+        "cm:cs-lint": "php-cs-fixer fix --diff --verbose --dry-run"
+    }
+}
