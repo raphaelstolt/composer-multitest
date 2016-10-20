@@ -41,8 +41,4 @@ script:
   - if [[ $LINT = true ]]; then
       composer cm:cs-lint;
     fi
-  - if [[ $(( $TRAVIS_BUILD_NUMBER % 25 )) = 0 ]]; then
-      composer cm:test-all;
-    else
-      composer cm:test;
-    fi
+  - composer cm:test

@@ -64,14 +64,9 @@ OK (96 tests, 150 assertions)
 ❯
 ```
 
-#### Running tests without integration tests
+#### Running tests
 ``` bash
 composer cm:test
-```
-
-#### Running all tests
-``` bash
-composer cm:test-all
 ```
 
 #### License
