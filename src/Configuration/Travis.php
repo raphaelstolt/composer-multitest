@@ -54,6 +54,7 @@ class Travis
         } catch (ParseException $e) {
             try {
                 $configuration = $this->reduceToMatrixOrBasicPhpVersionsConfiguration();
+
                 return $this->resolveVersions(Yaml::parse($configuration));
             } catch (ParseException $e) {
                 $message = 'Unable to parse ' . self::CONFIGURATION . '.';
@@ -75,8 +76,8 @@ class Travis
             . self::CONFIGURATION;
 
         $file = new \SplFileObject($travisConfiguration);
-        $startline = null;
-        $endline = null;
+
+        $endline = $startline = null;
 
         foreach ($file as $line) {
             if (preg_match('/^matrix:/s', $line)) {
@@ -102,7 +103,9 @@ class Travis
         if ($endline === null) {
             $endline = count($file);
         }
+
         $matrix = '';
+
         foreach ($file as $line) {
             if ($file->key() >= $startline && $file->key() <= $endline) {
                 $matrix.= $line . "\n";
