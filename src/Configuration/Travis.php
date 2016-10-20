@@ -112,6 +112,14 @@ class Travis
         return $matrix;
     }
 
+    /**
+     * Resolve versions from parsed Travis CI configuration.
+     *
+     * @param  array $configuration The parsed Travis CI configuration.
+     * @throws Stolt\Composer\Configuration\Travis\Exceptions\VersionsNotResolvable
+     * @return array
+     *
+     */
     protected function resolveVersions(array $configuration)
     {
         $versions = [];
