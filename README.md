@@ -11,7 +11,7 @@ As `composer-multitest` utilizes phpenv and PHPBrew it's assumed that at least o
 
 The versions to test against are read from the local Travis CI configuration so it's assumed that one is present. Versions present in the Travis CI configuration not having a phpenv or PHPBrew managed version will __not__ be executed.
 
-The Composer scripts `composer-multitest` will run __MUST__ be named `test` or `spec` and they __can__ be defined in a Composer script namespace like `library:test|spec`.
+The Composer script `composer-multitest` will run __MUST__ be named `test` or `spec` and it __can__ be defined in a Composer script namespace like `library:test|spec`.
 
 ## Installation
 The Composer script should be installed as a development dependency through Composer.
