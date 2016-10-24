@@ -106,6 +106,21 @@ abstract class PhpManager
     }
 
     /**
+     * Guard if switch back to default PHP version is required.
+     *
+     * @param  string $currentActiveVersion The current active version.
+     * @return boolean
+     */
+    protected function isSwitchBackToDefaultPhpVersionRequired($currentActiveVersion)
+    {
+        if ($this->defaultPhpVersion === trim($currentActiveVersion)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Runs the Composer script when only single
      * runnable version available.
      *

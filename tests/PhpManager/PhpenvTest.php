@@ -476,4 +476,60 @@ CONTENT;
             $manager->multiRun($composerScriptMock, $runnableVersions)
         );
     }
+
+    /**
+     * @test
+     */
+    public function isSwitchBackToDefaultPhpVersionRequiredGuardReturnsFalse()
+    {
+        $method = new \ReflectionMethod(
+          'Stolt\Composer\PhpManager\Phpenv', 'isSwitchBackToDefaultPhpVersionRequired'
+        );
+        $method->setAccessible(true);
+
+        $ioMock = Mockery::mock(
+            'Composer\IO\IOInterface'
+        );
+
+        $phpenvManagerMock = Mockery::mock(
+            'Stolt\Composer\PhpManager\Phpenv',
+            [$ioMock]
+        );
+
+        $this->forcePropertyValue(
+            $phpenvManagerMock,
+            'defaultPhpVersion',
+            '7.1.0'
+        );
+
+        $this->assertFalse($method->invoke($phpenvManagerMock, '7.1.0'));
+    }
+
+    /**
+     * @test
+     */
+    public function isSwitchBackToDefaultPhpVersionRequiredGuardReturnsTrue()
+    {
+        $method = new \ReflectionMethod(
+          'Stolt\Composer\PhpManager\Phpenv', 'isSwitchBackToDefaultPhpVersionRequired'
+        );
+        $method->setAccessible(true);
+
+        $ioMock = Mockery::mock(
+            'Composer\IO\IOInterface'
+        );
+
+        $phpenvManagerMock = Mockery::mock(
+            'Stolt\Composer\PhpManager\Phpenv',
+            [$ioMock]
+        );
+
+        $this->forcePropertyValue(
+            $phpenvManagerMock,
+            'defaultPhpVersion',
+            '7.1.0'
+        );
+
+        $this->assertTrue($method->invoke($phpenvManagerMock, '5.6.0'));
+    }
 }

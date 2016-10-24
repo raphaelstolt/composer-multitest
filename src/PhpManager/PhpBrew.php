@@ -77,6 +77,7 @@ class PhpBrew extends PhpManager
         }
 
         $composerMessage = ">> Running '" . $composerScript->getCommandLine() . "'.";
+        $lastRunnableVersion = array_pop($runnableVersions);
 
         foreach ($runnableVersions as $runnableVersion) {
             try {
@@ -90,21 +91,24 @@ class PhpBrew extends PhpManager
 
                 $this->io->write($composerScript->getIncrementalOutput());
             } catch (ProcessFailedException $pfe) {
-                $this->switchBackToDefaultPhpVersion();
-                $defaultPhpVersion = $this->getDefaultPhpVersion();
-
                 $this->io->write($composerScript->getOutput());
-
                 $this->io->write(">> Running '" . $composerScript->getCommandLine() . "' failed.");
-                $this->io->write(">> Switching back to '$defaultPhpVersion'.");
+
+                if ($this->isSwitchBackToDefaultPhpVersionRequired($lastRunnableVersion)) {
+                    $this->switchBackToDefaultPhpVersion();
+                    $defaultPhpVersion = $this->getDefaultPhpVersion();
+                    $this->io->write(">> Switching back to '$defaultPhpVersion'.");
+                }
 
                 return false;
             }
         }
 
-        $this->switchBackToDefaultPhpVersion();
-        $defaultPhpVersion = $this->getDefaultPhpVersion();
-        $this->io->write(">> Switching back to '$defaultPhpVersion'.");
+        if ($this->isSwitchBackToDefaultPhpVersionRequired($lastRunnableVersion)) {
+            $this->switchBackToDefaultPhpVersion();
+            $defaultPhpVersion = $this->getDefaultPhpVersion();
+            $this->io->write(">> Switching back to '$defaultPhpVersion'.");
+        }
 
         return true;
     }
