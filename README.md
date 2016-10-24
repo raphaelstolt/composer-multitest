@@ -58,7 +58,6 @@ Time: 591 ms, Memory: 12.25MB
 
 OK (96 tests, 150 assertions)
 
->> Switching back to 'php-5.6.19'.
 ❯ echo $?
 0
 ❯
