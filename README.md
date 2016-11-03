@@ -26,7 +26,7 @@ Once installed add the Composer script to the existing `composer.json` and use i
 ``` json
 {
     "scripts": {
-        "multitest":  "Stolt\\Composer\\Multitest::run"
+        "multitest": "Stolt\\Composer\\Multitest::run"
     },
 }
 ```
@@ -36,7 +36,7 @@ If you want to disable the prerequisite that the tests or specs have to be run a
 ``` json
 {
     "scripts": {
-        "multitest-run":  "Stolt\\Composer\\Multitest::run",
+        "multitest-run": "Stolt\\Composer\\Multitest::run",
         "multitest": "composer run-script multitest-run -- --skip-missing-versions"
     },
 ```
