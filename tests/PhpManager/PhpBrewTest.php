@@ -487,7 +487,7 @@ CONTENT;
         );
         $ioMock->shouldReceive('write')
             ->once()
-            ->with("Running 'composer validate'.");
+            ->with(">> Running 'composer validate'.");
 
         $processMock = Mockery::mock(
             'Symfony\Component\Process\Process[enableOutput,mustRun,getIncrementalOutput]',

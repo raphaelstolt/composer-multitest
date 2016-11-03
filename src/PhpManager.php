@@ -133,7 +133,7 @@ abstract class PhpManager
      */
     protected function singleRun(Process $composerScript)
     {
-        $message = "Running '" . $composerScript->getCommandLine() . "'.";
+        $message = ">> Running '" . $composerScript->getCommandLine() . "'.";
         $this->io->write($message);
 
         $composerScript->enableOutput();
