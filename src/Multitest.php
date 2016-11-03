@@ -15,6 +15,8 @@ use Stolt\Composer\PhpManager\Phpenv;
 
 class Multitest
 {
+    const SKIP_MISSING_VERSIONS_OPTION = '--skip-missing-versions';
+
     /**
      * Run a Composer script against multiple versions managed by
      * phpenv or PHPBrew.
@@ -33,6 +35,12 @@ class Multitest
         $io = $event->getIO();
 
         try {
+            $skipMissingVersions = array_search(
+                Multitest::SKIP_MISSING_VERSIONS_OPTION,
+                $event->getArguments(),
+                1
+            ) !== false;
+
             $manager = (isset($phpenvManager)) ? $phpenvManager : new Phpenv($io);
 
             if ($manager->isInstalled() === false) {
@@ -47,9 +55,22 @@ class Multitest
             $composerScript = (new Composer())->getTestOrSpecComposerScript();
             $phpVersions = (new Travis())->getPhpVersions();
 
+            $runnableVersions = $manager->getRunnableVersions($phpVersions);
+
+            if ($skipMissingVersions === false
+                && count($runnableVersions) !== count($phpVersions)
+            ) {
+                $error = "Unable to run '" . $composerScript->getCommandLine()
+                    . "' against all PHP versions. Aborting."
+                    . PHP_EOL . 'This prerequisite can be disabled '
+                    . "by setting the '" . Multitest::SKIP_MISSING_VERSIONS_OPTION . "' option.";
+                $io->writeError($error);
+                return false;
+            }
+
             return $manager->multiRun(
                 $composerScript,
-                $manager->getRunnableVersions($phpVersions)
+                $runnableVersions
             );
         } catch (Blank $b) {
             $io->writeError($b->getMessage());

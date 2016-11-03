@@ -9,7 +9,7 @@
 ## Assumptions
 As `composer-multitest` utilizes phpenv and PHPBrew it's assumed that at least one of them is installed and manages several PHP versions. It will first look for phpenv managed versions and when this fails it will subsequently look for PHPBrew managed ones.
 
-The versions to test against are read from the local Travis CI configuration so it's assumed that one is present. Versions present in the Travis CI configuration not having a phpenv or PHPBrew managed version will __not__ be executed.
+The versions to test against are read from the local Travis CI configuration so it's assumed that one is present. Versions present in the Travis CI configuration not having a phpenv or PHPBrew managed version will fail the script when not disabled via the `--skip-missing-versions` option.
 
 The Composer script `composer-multitest` will run __MUST__ be named `test` or `spec` and it __can__ be defined in a Composer script namespace like `library:test|spec`.
 
@@ -29,6 +29,16 @@ Once installed add the Composer script to the existing `composer.json` and use i
         "multitest":  "Stolt\\Composer\\Multitest::run"
     },
 }
+```
+
+If you want to disable the prerequisite that the tests or specs have to be run against all PHP versions defined in the Travis CI configuration use the `--skip-missing-versions` option like shown next.
+
+``` json
+{
+    "scripts": {
+        "multitest-run":  "Stolt\\Composer\\Multitest::run",
+        "multitest": "composer run-script multitest-run -- --skip-missing-versions"
+    },
 ```
 
 ## Example output
