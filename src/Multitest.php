@@ -20,17 +20,20 @@ class Multitest
      * phpenv or PHPBrew.
      *
      * @param  Composer\Script\Event     $event
-     * @param  Stolt\Composer\PhpManager $pyenvManager
+     * @param  Stolt\Composer\PhpManager $phpenvManager
      * @param  Stolt\Composer\PhpManager $phpbrewManager
      *
      * @return boolean
      */
-    public static function run(Event $event, PhpManager $pyenvManager = null, PhpManager $phpbrewManager = null)
-    {
+    public static function run(
+        Event $event,
+        PhpManager $phpenvManager = null,
+        PhpManager $phpbrewManager = null
+    ) {
         $io = $event->getIO();
 
         try {
-            $manager = (isset($pyenvManager)) ? $pyenvManager : new Phpenv($io);
+            $manager = (isset($phpenvManager)) ? $phpenvManager : new Phpenv($io);
 
             if ($manager->isInstalled() === false) {
                 $manager = (isset($phpbrewManager)) ? $phpbrewManager : new PHPBrew($io);
