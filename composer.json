@@ -23,7 +23,8 @@
         "composer/composer": "^1.0",
         "friendsofphp/php-cs-fixer": "^2.0",
         "mockery/mockery": "^0.9.5",
-        "phpunit/phpunit": "^4.8 || ^5.0"
+        "phpunit/phpunit": "^4.8 || ^5.0",
+        "stolt/lean-package-validator": "^1.6"
     },
     "autoload": {
         "psr-4": {
@@ -39,6 +40,7 @@
         "cm:test": "phpunit",
         "cm:test-with-coverage": "phpunit --coverage-html coverage-reports",
         "cm:cs-fix": "php-cs-fixer fix . -vv || true",
-        "cm:cs-lint": "php-cs-fixer fix --diff --verbose --dry-run"
+        "cm:cs-lint": "php-cs-fixer fix --diff --verbose --dry-run",
+        "cm:gitattributes-validation": "lean-package-validator validate --enforce-strict-order"
     }
 }

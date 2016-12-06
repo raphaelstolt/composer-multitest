@@ -11,7 +11,7 @@ matrix:
       group: edge
     - php: nightly
     - php: 7.1
-      env: LINT=true
+      env: LINT=true VALIDATE_GITATTRIBUTES=true
     - php: 7.0
     - php: 5.6
   fast_finish: true
@@ -35,6 +35,9 @@ before_script:
 script:
   # Use custom script to avoid the risk of terminating the build process
   - ./bin/travis/fail-non-feature-topic-branch-pull-request
+  - if [[ $VALIDATE_GITATTRIBUTES = true ]]; then
+      composer cm:gitattributes-validation;
+    fi
   # Verify coding standard compliance only once
   - if [[ $LINT = true ]]; then
       composer cm:cs-lint;
